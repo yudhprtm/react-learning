@@ -23,51 +23,56 @@ export default function index() {
     router.push("/crud/add");
   };
 
-  const fetchData = async () => {
-    const listData = await getListData();
-    setArr(listData);
-  };
+const toDetail = (id: number) => {
+  router.push("crud/detail/" + id);
+};
 
-  useEffect(() => {
-    fetchData();
-  });
+const fetchData = async () => {
+  const listData = await getListData();
+  setArr(listData);
+};
 
-  return (
-    <Grid>
-      <Button variant="contained" onClick={() => toAddPage()}>
-        <AddIcon /> Add
-      </Button>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Body</TableCell>
-              <TableCell>Action</TableCell>
+useEffect(() => {
+  fetchData();
+});
+
+return (
+  <Grid>
+    <Button variant="contained" onClick={() => toAddPage()}>
+      <AddIcon /> Add
+    </Button>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Body</TableCell>
+            <TableCell>Action</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {arr.map((res: any) => (
+            <TableRow
+              // di res kalau ada id, ditampilin, kalau gk ada gk akan error karna pakai tanda tanya. klo gk pake, bakal error
+              key={res?.id}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {res?.id}
+              </TableCell>
+              <TableCell>{res?.title}</TableCell>{" "}
+              <TableCell>{res?.body}</TableCell>
+              <TableCell>
+                <Button variant="contained" onClick={() => toDetail(res?.id)}>
+                  Detail
+                </Button>
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {arr.map((res: any) => (
-              <TableRow
-                key={res?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {res?.id}
-                </TableCell>
-                <TableCell>{res?.title}</TableCell>{" "}
-                <TableCell>{res?.body}</TableCell>
-                <TableCell>
-                  {/* <Button variant="contained" onClick={() => toDetail(res?.id)}>
-                    Detail
-                  </Button> */}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Grid>
-  );
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Grid>
+);
 }
