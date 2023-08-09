@@ -21,3 +21,15 @@ export async function detailPost(id: number) {
     return res.data;
   } catch (error) {}
 }
+
+export async function updatePost(id: number, dataInput: any) {
+  try {
+    const res = await axios.post(
+      `https://jsonplaceholder.typicode.com/posts/${id}`,
+      dataInput
+    );
+    return res.data;
+  } catch (error) {
+    console.log("Error!");
+  }
+}
