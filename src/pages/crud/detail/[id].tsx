@@ -18,10 +18,11 @@ type Inputs = {
 };
 
 export default function edit() {
-  //dibuat variable
+  //dibuat variable ambil url belakang nya
   const router = useRouter();
   //   liat di console log cek id nya ada berapa, ada di query kan
   const id = router.query.id as number | undefined;
+  // console.log(router);
   //useEffect buat reload, kenapa taro setelah koma karena id itu variable, ada di index contohnya
   useEffect(() => {}, [id]);
   const [dataFetch, setDataFetch] = useState<any>();
